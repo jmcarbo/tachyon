@@ -17,7 +17,7 @@ var cUpdateScript = []byte(`#!/bin/bash
 cd .tachyon
 
 REL=$TACHYON_RELEASE
-BIN=tachyon-$TACHYON_OS-$TACHYON_ARCH
+BIN=tachyon_$TACHYON_OS_$TACHYON_ARCH.tar.gz
 
 if test -f tachyon; then
   CUR=$(< release)
