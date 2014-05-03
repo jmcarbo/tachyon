@@ -39,22 +39,7 @@ fi
 if ! test -f tachyon; then
   echo "Downloading $REL/$BIN..."
 
-  $DL https://s3-us-west-2.amazonaws.com/tachyon.vektra.io/$REL/sums
-  if which gpg > /dev/null; then
-    gpg --keyserver keys.gnupg.net --recv-key A408199F &
-    $DL https://s3-us-west-2.amazonaws.com/tachyon.vektra.io/$REL/sums.asc &
-  fi
-
-  $DL https://s3-us-west-2.amazonaws.com/tachyon.vektra.io/$REL/$BIN
-
-  wait
-
-  if which gpg > /dev/null; then
-    if ! gpg --verify sums.asc; then
-      echo "Signature verification failed! Aborting!"
-      exit 1
-    fi
-  fi
+  $DL http://dl.bintray.com/jmcarbo/tachyon/$BIN
 
   mv $BIN $BIN.gz
 
@@ -62,15 +47,6 @@ if ! test -f tachyon; then
   # assume it's already in the correct format.
   if ! gunzip $BIN.gz; then
     mv $BIN.gz $BIN
-  fi
-
-  if which shasum > /dev/null; then
-    if ! (grep $BIN sums | shasum -c); then
-      echo "Sum verification failed!"
-      exit 1
-    fi
-  else
-    echo "No shasum available to verify files"
   fi
 
   echo $REL > release
